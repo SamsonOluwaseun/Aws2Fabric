@@ -16,7 +16,7 @@ This project implements a sophisticated incremental data loading mechanism. By m
 
 ### Key Components:
 
-* **Data Ingestion from AWS S3**: Files are uploaded daily, partitioned by folders.
+* **Data Ingestion from AWS S3**: Files are uploaded daily in an S3 bucket.
 * **Shortcut Connection in Fabric**: Using AWS Access Key to link S3 into Fabric's Lakehouse.
 * **Incremental Load Tracking**: Ensures only new files are processed.
 * **Data Transformation with PySpark**: Parses and flattens JSONs into a star schema:
@@ -47,26 +47,32 @@ This project implements a sophisticated incremental data loading mechanism. By m
 
 * Daily transaction data generated via Python script
 * Uploaded to AWS S3 bucket: `microsoft-fabrics-0619`
-* Group `Microsoft_Fabrics_Engineer` created with full access
+* Group `Microsoft_Fabrics_Engineer` created with full S3 bucket access
 
 ### 2. **Connect Microsoft Fabric to S3**
 
 * Fabric Lakehouse shortcut configured to S3 bucket
-* `awss3_raw` (bronze) Lakehouse reflects the shortcut
+* `awss3_raw` (Bronze Layer) Lakehouse reflects the shortcut
 
-### 3. **Data Transformation in Notebooks**
+### 3. **Increamental data reading in Notebooks and Load to Silver Layer Lakehouse**
 
-* Daily JSONs incrementally read
-* Records merged and enriched
+* Create a shortcut from the `awss3_raw` to `awss3_transformed`
+* New files separated from already loaded files
+* Delta files daily JSONs incrementally read
+* Increamental files written and appended to existing file in `awss3_transformed`
+* Output Formats: Parquet and Delta
+
+### 4. **Transformation Store Output in Silver Layer**
+
+* Using shortcut to Parquet and Delta file in awss3_transformed
 * Converted to star schema using PySpark
-
-### 4. **Store Output in Silver Layer**
-
-* Transformed tables written to `awss3_transformed`
-* Formats: Parquet and Delta
+* Records merged and enriched
+* Transformed tables written to `awss3_presentation`
+* Storage Formats: Delta Tables
 
 ### 5. **Semantic Model and Table Load**
 
+*Using Tables in `awss3_presentation`
 * Tables loaded and modeled in Fabric
 * Date table created and marked
 * Formatting and relationships configured
