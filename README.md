@@ -10,16 +10,16 @@ Traditional data ingestion methods often lead to redundant data storage and inef
 
 ---
 
-## ✅ Our Solution: Incremental Loading & Optimized Transformation
+## ✅ My Solution: Incremental Loading & Optimized Transformation
 
-This project implements a sophisticated incremental data loading mechanism. By meticulously tracking previously processed files, the pipeline intelligently identifies and ingests only new or updated transaction data from AWS S3 into Microsoft Fabric.
+This project implements a sophisticated incremental data loading mechanism. By meticulously tracking previously processed files, the pipeline intelligently identifies and ingests only new or updated transaction data from Microsoft Fabrics Bronze layer Lakehouse into Microsoft Fabrics Silver Layer Lakehouse.
 
 ### Key Components:
 
 * **Data Ingestion from AWS S3**: Files are uploaded daily in an S3 bucket.
-* **Shortcut Connection in Fabric**: Using AWS Access Key to link S3 into Fabric's Lakehouse.
-* **Incremental Load Tracking**: Ensures only new files are processed.
-* **Data Transformation with PySpark**: Parses and flattens JSONs into a star schema:
+* **Shortcut Connection in Fabric**: Using AWS Access Key to link S3 into Microsoft Fabric's Bronze Layer Lakehouse.
+* **Incremental Load Tracking**: Ensures only new files are processed in the Microsoft Fabric's Silver Layer Lakehouse.
+* **Data Transformation with PySpark**: Parses and flattens JSONs into a star schema in the Microsoft Fabric's Gold Layer Lakehouse:
 
   * `SalesFact`
   * `CustomerDim`, `ProductDim`, `PaymentDim`, `AccountDim`, `LocationDim`, `TimeDim`
@@ -45,13 +45,13 @@ This project implements a sophisticated incremental data loading mechanism. By m
 
 ### 1. **Data Generation and Ingestion**
 
-* Daily transaction data generated via Python script
+* Sample Daily transaction data are generated via Python script
 * Uploaded to AWS S3 bucket: `microsoft-fabrics-0619`
 * Group `Microsoft_Fabrics_Engineer` created with full S3 bucket access
 
 ### 2. **Connect Microsoft Fabric to S3**
 
-* Fabric Lakehouse shortcut configured to S3 bucket
+* Microsoft Fabric's Lakehouse shortcut was configured linking to S3 bucket
 * `awss3_raw` (Bronze Layer) Lakehouse reflects the shortcut
 
 ### 3. **Increamental data reading in Notebooks and Load to Silver Layer Lakehouse**
@@ -126,12 +126,15 @@ Payment Success Rate = DIVIDE(CALCULATE(COUNT(PaymentDim[PaymentId]), PaymentDim
 
 ## 📁 Key Artifacts
 
-* Raw + Transformed files in AWS S3
+* Raw files in AWS S3
 * PySpark Notebooks
 * Delta/Parquet tables
 * Semantic model in Fabric
 * Power BI dashboard (connected live)
 * Fabric Data Pipeline
+* Fabrics Lakehouse
+* Fabrics Medallion Task Flow
+* Draw io for High Level architecture
 
 ---
 
