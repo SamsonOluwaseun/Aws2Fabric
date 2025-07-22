@@ -106,7 +106,7 @@ Payment Success Rate = DIVIDE(CALCULATE(COUNT(PaymentDim[PaymentId]), PaymentDim
 
 ## 📊 Recommended Visuals
 
-![Revenue Analytics](images/revenue%20Analytics.png)
+![Revenue Analytics](images/Revenue%20Analytics.png)
 ![Customer Analytics](images/customer%20Analytics.png)
 
 ---
