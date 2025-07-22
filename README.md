@@ -106,12 +106,8 @@ Payment Success Rate = DIVIDE(CALCULATE(COUNT(PaymentDim[PaymentId]), PaymentDim
 
 ## 📊 Recommended Visuals
 
-* Revenue Trend (Line Chart)
-* AOV by Segment (Column)
-* Customer Distribution (Donut)
-* Payment Source Split (Stacked Column)
-* Revenue by Country (Map)
-* Order Status Trend (Area Chart)
+![Revenue Analytics](img/revenue%20Analytics.png)
+![Customer Analytics](img/customer%20Analytics.png)
 
 ---
 
